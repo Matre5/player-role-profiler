@@ -1,8 +1,11 @@
 # Football Role Analysis Framework
-A systematic approach to measuring player role compatibility using function-based metrics\*\*
 
+Football recruitment often focuses on output.
+This project focuses on function.
 
-Most player analysis focuses on <b>output</b> (goals, assists, ratings). This framework focuses on <b>function</b> (how players are deployed, what they're asked to do).
+player-role-profiler is a role-based player analysis system that compares how players are used on the pitch using event data and machine learning.
+The goal is not to rank players, but to evaluate **fit, redundancy, and tactical alignment.**
+
 By measuring role rather than results, we can:
 - Compare players across different team contexts
 - Identify transfer targets with compatible playing styles
