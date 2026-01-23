@@ -24,9 +24,7 @@ With this schema, you can:
 
 ## Data Sources
 
-- Match-level stats: Opta, StatsBomb, FBref
-- Position data: Wyscout, InStat
-- xG data: Understat, FBref
+- FBref
 
 ---
 
