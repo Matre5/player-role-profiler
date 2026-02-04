@@ -28,7 +28,7 @@ def create_hero_cluster_visual(pca_df, output_path="../visuals/hero_cluster_map.
     role_colors = {
         "Attacking Creators": "#FF6B6B",      # Red
         "Defensive Midfielders": "#4ECDC4",   # Teal
-        "Centre Backs": "#45B7D1",            # Blue
+        "GoalKeepers": "#45B7D1",            # Blue
         "Box-to-Box Midfielders": "#FFA07A",  # Orange
         "Strikers": "#98D8C8"                 # Green
     }
@@ -66,8 +66,8 @@ def create_hero_cluster_visual(pca_df, output_path="../visuals/hero_cluster_map.
     
     # Annotate some famous players for context
     famous_players = [
-        "Mohamed Salah", "Erling Haaland", "Rodri",
-        "William Saliba", "Kevin De Bruyne", "Declan Rice"
+        "Mohamed Salah", "Erling Haaland", "Gabriel Magalhães",
+        "William Saliba", "Kevin De Bruyne", "Declan Rice", "David Raya",
     ]
     
     texts = []
@@ -297,82 +297,3 @@ def create_radar_grid(radar_data, features, role_labels,
     print(f"✅ Radar grid saved: {output_path}")
     
     return fig
-
-
-# ============================================================================
-# CLUSTER PROFILE TABLE (as image)
-# ============================================================================
-
-def create_cluster_profile_table(cluster_profile, role_labels,
-                                  output_path="../visuals/cluster_profile_table.png"):
-    """
-    Create a clean table showing cluster characteristics
-    """
-    
-    # Select key metrics for display
-    display_metrics = [
-        'minutes', 'touches', 'touches_att_3rd_pct',
-        'shots', 'xg', 'tackles', 'interceptions'
-    ]
-    
-    # Create display dataframe
-    display_df = cluster_profile[display_metrics].copy()
-    display_df.index = [role_labels[i] for i in display_df.index]
-    
-    # Round for readability
-    display_df = display_df.round(2)
-    
-    # Rename columns for display
-    display_df.columns = ['Mins', 'Touches', 'Att 3rd %', 'Shots', 'xG', 'Tackles', 'Ints']
-    
-    # Create figure
-    fig, ax = plt.subplots(figsize=(14, 6))
-    ax.axis('tight')
-    ax.axis('off')
-    
-    # Create table
-    table = ax.table(
-        cellText=display_df.values,
-        rowLabels=display_df.index,
-        colLabels=display_df.columns,
-        cellLoc='center',
-        loc='center',
-        colWidths=[0.12] * len(display_df.columns)
-    )
-    
-    # Style
-    table.auto_set_font_size(False)
-    table.set_fontsize(11)
-    table.scale(1, 2)
-    
-    # Color header
-    for i in range(len(display_df.columns)):
-        table[(0, i)].set_facecolor('#2C3E50')
-        table[(0, i)].set_text_props(weight='bold', color='white')
-    
-    # Color row labels
-    for i in range(1, len(display_df) + 1):
-        table[(i, -1)].set_facecolor('#34495E')
-        table[(i, -1)].set_text_props(weight='bold', color='white')
-    
-    # Title
-    plt.title(
-        "Cluster Profiles — Average Stats per Role",
-        fontsize=16,
-        fontweight='bold',
-        pad=20
-    )
-    
-    # Branding
-    fig.text(
-        0.99, 0.01,
-        "@MatreAigoukhan | Data: FBref",
-        ha='right',
-        va='bottom',
-        fontsize=9,
-        alpha=0.7
-    )
-    
-    plt.tight_layout()
-    plt.savefig(output_path, dpi=300, bbox_inches='tight', facecolor='white')
-    print(f"✅ Table saved: {output_path}")

@@ -198,3 +198,38 @@ def find_edge_cases(pca_df):
     print("\nLowest Involvement (Low PC2):")
     for _, row in bottom_pc2.iterrows():
         print(f"  {row['player']:<30} PC2={row['PC2']:.2f}, Role={row['role_name']}")
+
+
+def run_all_validations(pca_df, df):
+    """Run all validation checks at once"""
+    
+    print("\n" + "="*70)
+    print(" "*15 + "PLAYER ROLE PROFILING - VALIDATION SUITE")
+    print("="*70)
+    
+    # 1. Cluster distribution
+    check_cluster_distribution(pca_df)
+    
+    # 2. Top players per cluster
+    check_top_players_per_cluster(pca_df, df)
+    
+    # 3. Position alignment
+    check_position_alignment(pca_df)
+    
+    # 4. Known players
+    validate_known_players(pca_df)
+    
+    # 5. Cluster separation
+    check_cluster_separation(pca_df)
+    
+    # 6. Edge cases
+    find_edge_cases(pca_df)
+    
+    print("\n" + "="*70)
+    print("VALIDATION COMPLETE ✅")
+    print("="*70)
+    print("\nNext steps:")
+    print("1. Review the outputs above")
+    print("2. Check saved charts in ../visuals/")
+    print("3. If everything looks good → proceed to visualization polish")
+    print("4. If issues found → refine clustering parameters")
